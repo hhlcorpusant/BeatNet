@@ -11,7 +11,6 @@ from BeatNet.log_spect import LOG_SPECT
 import librosa
 import sys
 from BeatNet.model import BDA
-import pyaudio
 import matplotlib.pyplot as plt
 import time
 import threading
@@ -79,13 +78,13 @@ class BeatNet:
         else:
             raise RuntimeError(f'Failed to open the trained model: {model}')
         self.model.eval()
-        if self.mode == 'stream':
-            self.stream_window = np.zeros(self.log_spec_win_length + 2 * self.log_spec_hop_length, dtype=np.float32)                                          
-            self.stream = pyaudio.PyAudio().open(format=pyaudio.paFloat32,
-                                             channels=1,
-                                             rate=self.sample_rate,
-                                             input=True,
-                                             frames_per_buffer=self.log_spec_hop_length,)
+        # if self.mode == 'stream':
+        #     self.stream_window = np.zeros(self.log_spec_win_length + 2 * self.log_spec_hop_length, dtype=np.float32)                                          
+        #     self.stream = pyaudio.PyAudio().open(format=pyaudio.paFloat32,
+        #                                      channels=1,
+        #                                      rate=self.sample_rate,
+        #                                      input=True,
+        #                                      frames_per_buffer=self.log_spec_hop_length,)
                                              
     def process(self, audio_path=None):   
         if self.mode == "stream":
